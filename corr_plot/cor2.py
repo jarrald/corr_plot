@@ -10,29 +10,13 @@ import pandas as pd
 import scipy.stats
 
 class Cor2:
-    """
-    Helper to show a plot with choosen values, it's regression & their placements
-    Deals with correlation of 2 observations or groups thereof
-    """
-    def __init__(self, vx, vy):
-        """initializes the correlation class
-                Args:
-            vx (iterable): values on x-axis
-            vy (iterable): values on y-axis
-        >>> c = Cor2([4,5,7,9,11,13,15,18],[5,7,9,10,12,14,15,20])
 
-        """        
+    """Deals with correlation of 2 observations or groups thereof"""
+    def __init__(self, vx, vy):
         self.vx = pd.Series(vx)
         self.vy = pd.Series(vy)
 
     def draw(self, color="red"):
-        """Creates a window gui for the user to see the data
-                Args:
-            color (string, optional): color of the dots shown. Defaults to "red".
-        >>> c = Cor2([4,5,7,9,11,13,15,18],[5,7,9,10,12,14,15,20])
-        >>> c.draw()
-        ...
-        """        
         self.window = tk.Tk()
         self.window.title = "Correlation graph"
         
@@ -61,16 +45,7 @@ class Cor2:
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
         self.window.mainloop()
     def getCorr(self):
-        """Calculates the correlation by using pandas
-            Returns:
-                float: from 0 to 1 where 1 means they're most likely correlated
-        >>> c = Cor2([4,5,7,9,11,13,15,18],[5,7,9,10,12,14,15,20])
-        >>> c.getCorr()
-        0.9896952582371691
-        """        
-        return (self.vx.corr(self.vy))
-
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod(optionflags=doctest.ELLIPSIS)
+        return (self.vx.corr(self.vy))*100
+c = Cor2([4,5,7,9,11,13,15,18],[5,7,9,10,12,14,15,20])
+print(c.getCorr())
+c.draw()
