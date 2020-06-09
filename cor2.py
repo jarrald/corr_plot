@@ -9,6 +9,7 @@ from random import randrange
 import pandas as pd
 import scipy.stats
 
+
 class Cor2:
     """
     Helper to show a plot with choosen values, it's regression & their placements
@@ -45,8 +46,8 @@ class Cor2:
         self.plotframe = ttk.Frame(self.container)
         self.plotframe.pack(side="right", fill="both", expand = True)
 
-        self.leftlabel = ttk.Label(self.menuframe, text="something1")
-        self.leftlabel.pack(padx=10,pady=10)
+        self.leftlabel = ttk.Label(self.menuframe, text="Settings")
+        self.leftlabel.pack(side="top", padx=10,pady=10)
 
 
         self.f = Figure(figsize=(5,5), dpi=100)
@@ -54,8 +55,9 @@ class Cor2:
         a.scatter(self.vx, self.vy, alpha=.5, label="label")
         self.regre = scipy.stats.linregress(self.vx, self.vy)
 
-        b = self.f.add_subplot()
-        b.plot(self.vx, self.regre.intercept + self.regre.slope * self.vx, color='green')
+        self.regressionButton = ttk.Button(self.menuframe, text="Show regression", command = lambda :self.showRegression())
+        self.regressionButton.pack()
+
         self.canvas = FigureCanvasTkAgg(self.f, self.container)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
@@ -69,7 +71,10 @@ class Cor2:
         0.9896952582371691
         """        
         return (self.vx.corr(self.vy))
-
+    def showRegression(self):
+        b = self.f.add_subplot()
+        b.plot(self.vx, self.regre.intercept + self.regre.slope * self.vx, color='green')
+        self.canvas.draw()
 
 if __name__ == "__main__":
     import doctest
